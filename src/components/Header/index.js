@@ -40,7 +40,7 @@ function Header({ items }) {
         {items.map(item => (
           <ListItem key={item.id} disablePadding>
             <ListItemButton>
-              <ListItemText primary={item.name} secondary={item.description + '              ' + ' Cost: $' + item.price}/>
+              <ListItemText primary={item.name} secondary={`${item.description}         Cost: $ + ${item.price}`}/>
             </ListItemButton>
           </ListItem>
         ))}
