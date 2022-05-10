@@ -5,15 +5,19 @@ import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-// import IconButton from '@mui/material/IconButton';
-// import DeleteIcon from '@mui/icons-material/Delete';
-import { updateCategory } from '../../store/categoryReducer';
+import { updateCategory, resetCategory } from '../../store/categoryReducer';
+import IconButton from '@mui/material/IconButton';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
-function CandidateList({ categories, activeCategory, updateCategory }) {
+function CandidateList({ categories, activeCategory, updateCategory, resetCategory }) {
   console.log('active', activeCategory);
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }} id="list">
+      <IconButton onClick={() => {resetCategory()}}>
+        <ArrowBackIcon></ArrowBackIcon>
+        Show All
+      </IconButton>
       {categories.map(category => (
         <Card sx={{ margin: "10px" }} raised key={category.id}>
           <CardContent>
@@ -25,9 +29,6 @@ function CandidateList({ categories, activeCategory, updateCategory }) {
           </CardActions>
         </Card>
       ))}
-      {/* <IconButton onClick={reset}>
-        <DeleteIcon />
-      </IconButton> */}
     </Box>
   )
 }
@@ -40,7 +41,8 @@ const mapStateToProps = ({ categories }) => {
 }
 
 const mapDispatchToProps = {
-  updateCategory
+  updateCategory,
+  resetCategory
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CandidateList);

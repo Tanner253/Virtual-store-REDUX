@@ -5,7 +5,7 @@ const initialState = {
       category: 'fishing-gear',
       name: 'Fishing Pole',
       description: 'Robust fiberglass pole for fishing',
-      price: 12.00,
+      price: '12.00',
       inventoryCount: 20,
     },
     {
@@ -13,7 +13,7 @@ const initialState = {
       category: 'fishing-gear',
       name: 'Fishing Hook Pack',
       description: 'High quality barbed hooks',
-      price: 6.00,
+      price: '6.00',
       inventoryCount: 60,
     },
     {
@@ -21,7 +21,7 @@ const initialState = {
       category: 'sports-gear',
       name: 'Soccer Ball',
       description: 'Soccer ball used by professionals',
-      price: 32.00,
+      price: '32.00',
       inventoryCount: 10,
     },
     {
@@ -29,10 +29,10 @@ const initialState = {
       category: 'sports-gear',
       name: 'Football',
       description: 'Football used by professionals',
-      price: 22.00,
+      price: '22.00',
       inventoryCount: 32,
     }
-  ]
+  ],
 }
 
 function productsReducer(state = initialState, action) {
@@ -42,15 +42,37 @@ function productsReducer(state = initialState, action) {
           products: state.products,
           filteredProducts: state.products.filter(product => product.category === action.payload.normalizedName)
       }
+      case 'DECSTOCK':
+        return {products: state.products.map(product => product.name === action.payload.name
+          ? {...product, inventoryCount: product.inventoryCount - 1}
+          : product
+        )}
+      case 'INCSTOCK':
+        return state.products.map(product => product.name === action.payload.name
+          ? {...product, inventoryCount: product.inventoryCount + 1}
+          : product
+        );
+        case 'RESET':
+          return{
+            ...state,
+            filteredProducts: state.products
+          }
     default:
       return state;
   }
 }
 
-export const updateList = (category) => {
+export const decStock = (product) => {
   return{
-    type: 'UPDATEACTIVE',
-    payload: category
+    type: 'DECSTOCK',
+    payload: product,
+  } 
+}
+
+export const incStock = (product) => {
+  return{
+    type: 'INCSTOCK',
+    payload: product,
   } 
 }
 

@@ -4,32 +4,35 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
-import DeleteIcon from '@mui/icons-material/Delete';
-import { updateList } from '../../store/productsReducer';
-function ProductList({ products, filteredProducts }) {
-  console.log('products', products, filteredProducts);
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import { decStock } from '../../store/productsReducer'
 
+function ProductList({ products, filteredProducts, decStock }) {
+  console.log('products', products, filteredProducts);
   return (
     <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }} id="list">
-      {filteredProducts? filteredProducts.map(product => (
-        <Card sx={{ margin: "10px" }} raised key={product.id}>
+      {filteredProducts ? filteredProducts.map(product => (
+        <Card sx={{ margin: "10px", width: '50%'}} raised key={product.id}>
           <CardContent>
-            <Typography gutterBottom variant="h3">{product.name}</Typography>
+            <Typography gutterBottom variant="h6">{product.name}</Typography>
             <Typography variant="body2" color="text.secondary">{product.displayName}</Typography>
           </CardContent>
+          <IconButton onClick={() => {decStock(product)}}>
+            <AddShoppingCartIcon />
+          </IconButton>
         </Card>
-      )):
-      products.map(product => (
-        <Card sx={{ margin: "10px" }} raised key={product.id}>
-          <CardContent>
-            <Typography gutterBottom variant="h3">{product.name}</Typography>
-            <Typography variant="body2" color="text.secondary">{product.displayName}</Typography>
-          </CardContent>
-        </Card>
-      ))}
-      <IconButton onClick={() => updateList(products)}>
-        <DeleteIcon />
-      </IconButton>
+      )) :
+        products.map(product => (
+          <Card sx={{ margin: "10px", width: '50%'}} raised key={product.id}>
+            <CardContent>
+              <Typography gutterBottom variant="h6">{product.name}</Typography>
+              <Typography variant="body2" color="text.secondary">{product.displayName}</Typography>
+            </CardContent>
+            <IconButton onClick={() => {decStock(product)}}>
+              <AddShoppingCartIcon />
+            </IconButton>
+          </Card>
+        ))}
     </Box>
   )
 }
@@ -42,7 +45,8 @@ const mapStateToProps = ({ products }) => {
 }
 
 const mapDispatchToProps = {
-  updateList
+  // updateList
+  decStock,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductList);

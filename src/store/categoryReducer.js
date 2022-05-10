@@ -25,6 +25,11 @@ function categoryReducer(state = initialState, action){
         categories: state.categories,
         activeCategory: action.payload.normalizedName
       }
+      case 'RESET':
+        return{
+          ...state,
+          activeCategory: ''
+        }
       default:
         return state
   }
@@ -34,6 +39,12 @@ export const updateCategory = (category) => {
   return{
     type: 'UPDATEACTIVE',
     payload: category
+  }
+}
+export const resetCategory = () => {
+  return{
+    type: 'RESET',
+    payload: ''
   }
 }
 
