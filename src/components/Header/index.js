@@ -14,6 +14,7 @@ import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
+import { createTheme, ThemeProvider} from '@mui/material/styles';
 
 function Header({ items }) {
   console.log('items', items);
@@ -28,10 +29,21 @@ function Header({ items }) {
 
     setState({ ...state, [anchor]: open });
   };
-
+  function getTotal() {
+    let sum = 0;
+    items.forEach(element => {
+      sum += element.price
+    });
+    return sum
+  }
+  const darkTheme = createTheme({
+    palette: {
+      mode: 'dark',
+    },
+  });
   const list = (anchor) => (
     <Box
-      sx={{ width: 250 }}
+      sx={{ width: 250, justifyContent: 'center' }}
       role="presentation"
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
@@ -40,44 +52,50 @@ function Header({ items }) {
         {items.map(item => (
           <ListItem key={item.id} disablePadding>
             <ListItemButton>
-              <ListItemText primary={item.name} secondary={`${item.description}         Cost: $ + ${item.price}`}/>
+              <ListItemText primary={item.name} secondary={`Category: ${item.category} | | Cost: $${item.price}`} />
             </ListItemButton>
           </ListItem>
         ))}
       </List>
       <Divider />
+      <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+        total: ${getTotal()}
+      </Typography>
     </Box>
   );
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
-        <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2 }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            SKNY SHOP
-          </Typography>
-          <IconButton onClick={toggleDrawer('right', true)}>
-            <Badge badgeContent={items.length} color="error">
-              <ShoppingCartIcon />
-            </Badge>
-          </IconButton>
-        </Toolbar>
-      </AppBar>
-      <Drawer
-        anchor={'right'}
-        open={state['right']}
-        onClose={toggleDrawer('right', false)}
-      >
-        {list('right')}
-      </Drawer>
+      <ThemeProvider theme={darkTheme}>
+
+        <AppBar position="static">
+          <Toolbar>
+            <IconButton
+              size="large"
+              edge="start"
+              color="inherit"
+              aria-label="menu"
+              sx={{ mr: 2 }}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+              SKNY SHOP
+            </Typography>
+            <IconButton onClick={toggleDrawer('right', true)}>
+              <Badge badgeContent={items.length} color="error">
+                <ShoppingCartIcon />
+              </Badge>
+            </IconButton>
+          </Toolbar>
+        </AppBar>
+        <Drawer
+          anchor={'right'}
+          open={state['right']}
+          onClose={toggleDrawer('right', false)}
+        >
+          {list('right')}
+        </Drawer>
+      </ThemeProvider>
     </Box>
   );
 }

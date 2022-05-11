@@ -1,3 +1,4 @@
+import axios from 'axios';
 const initialState = {
   products: [
     {
@@ -32,15 +33,17 @@ const initialState = {
       price: '22.00',
       inventoryCount: 32,
     }
-  ],
+  ]
 }
 
 function productsReducer(state = initialState, action) {
   switch (action.type) {
+    case 'GET_PRODUCTS':
+      return { products: action.payload.results }
     case 'UPDATEACTIVE':
       return {
           products: state.products,
-          filteredProducts: state.products.filter(product => product.category === action.payload.normalizedName)
+          filteredProducts: state.products.filter(product => product.category === action.payload.name)
       }
       case 'DECSTOCK':
         return {products: state.products.map(product => product.name === action.payload.name
@@ -76,5 +79,19 @@ export const incStock = (product) => {
   } 
 }
 
+export const getProducts = () => async (dispatch, getState) => {
+  // fetch from our API // do anything asynchronous
+  let response = await axios.get('https://api-js401.herokuapp.com/api/v1/products');
+
+  // return our action
+  dispatch(setProducts(response.data));
+}
+
+export const setProducts = (data) => {
+  return{
+    type: 'GET_PRODUCTS',
+    payload: data
+  }
+}
 export default productsReducer;
 

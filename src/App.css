@@ -1,10 +1,22 @@
 .App {
   text-align: center;
 }
+html{
+  background: rgb(0,0,0);
+  background: linear-gradient(270deg, rgba(0,0,0,1) 0%, rgba(179,0,0,1) 50%, rgba(7,0,0,1) 100%);
+}
 body{
   max-width: 960px;
   justify-content: center;
   margin: auto;
+}
+#root{
+  border-left: 2px solid white;
+  border-right: 2px solid white;
+  color:white;
+  background: rgb(179,0,0);
+  background: linear-gradient(187deg, rgba(179,0,0,1) 0%, rgba(0,0,0,1) 50%, rgba(179,0,0,1) 100%);
+  height: 100vh;
 }
 .App-logo {
   height: 40vmin;
