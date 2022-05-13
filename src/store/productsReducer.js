@@ -45,8 +45,15 @@ function productsReducer(state = initialState, action) {
           products: state.products,
           filteredProducts: state.products.filter(product => product.category === action.payload.name)
       }
+    case 'GETDETAILS':
+      return {
+          ...state,
+          productDetails: state.products.filter(product => product._id === action.payload._id)
+      }
       case 'DECSTOCK':
-        return {products: state.products.map(product => product.name === action.payload.name
+        return {
+          filteredProducts: state.filteredProducts,
+          products: state.products.map(product => product.name === action.payload.name
           ? {...product, inventoryCount: product.inventoryCount - 1}
           : product
         )}
@@ -77,6 +84,13 @@ export const incStock = (product) => {
     type: 'INCSTOCK',
     payload: product,
   } 
+}
+
+export const getDetails = (product) => {
+  return{
+    type: 'GETDETAILS',
+    payload: product
+  }
 }
 
 export const getProducts = () => async (dispatch, getState) => {

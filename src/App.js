@@ -1,8 +1,16 @@
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import Header from './components/Header/index.js'
 import Categories from './components/Categories/index.js'
 import Products from './components/Products/index.js'
 import Footer from './components/Footer/index.js'
+import Details from './components/Products/details.js'
+import Cart from './components/cart/checkout.js'
+import {
+  BrowserRouter,
+  Routes,
+  Route
+} from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { getProducts } from './store/productsReducer';
 import { getCategories } from './store/categoryReducer';
@@ -18,10 +26,13 @@ function App() {
 
   return (
     <div className="App">
-      <Header />
-      <Categories />
-      <Products />
-      <Footer />
+      <BrowserRouter>
+        <Routes>
+          <Route path='/Virtual-store-REDUX' element={[<Header/>, <Categories />, <Products />, <Footer />]}/>
+          <Route path={`/Virtual-store-REDUX/details`} element={[<Header/>, < Details />, <Footer />]}/>
+          <Route path={`/Virtual-store-REDUX/cart`} element={[<Header/>, <Cart />, <Footer />]}/>
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }

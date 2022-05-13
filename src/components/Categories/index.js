@@ -14,7 +14,7 @@ import Container from '@mui/material/Container';
 
 
 
-function CandidateList({ categories, activeCategory, updateCategory, resetCategory }) {
+function CategoryList({ categories, activeCategory, updateCategory, resetCategory }) {
   console.log('active', activeCategory);
 
   return (
@@ -22,14 +22,14 @@ function CandidateList({ categories, activeCategory, updateCategory, resetCatego
     <hr></hr>
       <Container>
       <Typography gutterBottom variant="h3">Categories: </Typography>
-      </Container>
-    <hr></hr>
-      <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }} id="list">
-        <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }} direction="row" justifyContent="center" alignItems="center">
           <IconButton sx={{color: 'white'}}onClick={() => { resetCategory() }}>
             <ArrowBackIcon></ArrowBackIcon>
             <Typography variant="h5">Show All</Typography>
           </IconButton>
+      </Container>
+    <hr></hr>
+      <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }} id="list">
+        <Grid container  columns={{ xs: 4, sm: 8, md: 12 }} direction="row" justifyContent="center" alignItems="center">
           {categories.map(category => (
             <Grid item xs={2} sm={4} md={4} key={category.id}>
               <Card sx={{ margin: "10px" }} raised key={category.id}>
@@ -69,4 +69,4 @@ const mapDispatchToProps = {
   resetCategory
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CandidateList);
+export default connect(mapStateToProps, mapDispatchToProps)(CategoryList);
