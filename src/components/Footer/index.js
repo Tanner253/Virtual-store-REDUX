@@ -10,7 +10,7 @@ export default function Footer() {
   return (
     <>
       <footer>
-        <Box sx={{ width: 500, justifyContent: 'center', margin: 'auto', marginTop: 50}}>
+        <Box sx={{ width: '100%', justifyContent: 'center', marginTop: 'auto'}}>
           <BottomNavigation
             showLabels
           >

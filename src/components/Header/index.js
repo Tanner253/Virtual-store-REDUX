@@ -14,7 +14,9 @@ import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
-import { createTheme, ThemeProvider} from '@mui/material/styles';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import { Link } from 'react-router-dom';
 
 function Header({ items }) {
   console.log('items', items);
@@ -50,17 +52,24 @@ function Header({ items }) {
     >
       <List>
         {items.map(item => (
-          <ListItem key={item.id} disablePadding>
-            <ListItemButton>
-              <ListItemText primary={item.name} secondary={`Category: ${item.category} | | Cost: $${item.price}`} />
-            </ListItemButton>
-          </ListItem>
+          <>
+            <ListItem key={item.id} disablePadding>
+              <ListItemText primary={item.name} secondary={`Category: ${item.category}`} />
+              <ListItemText secondary={`Cost: ${item.price}`} />
+            </ListItem>
+            <hr></hr>
+          </>
         ))}
       </List>
       <Divider />
-      <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-        total: ${getTotal()}
-      </Typography>
+      <Link to="/Virtual-store-REDUX/cart" style={{textDecoration:"none"}}>
+        <ListItemButton>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            Total: ${getTotal()}
+          </Typography>
+          <ArrowForwardIcon></ArrowForwardIcon>
+        </ListItemButton>
+      </Link>
     </Box>
   );
   return (
